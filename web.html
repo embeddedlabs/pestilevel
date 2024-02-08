@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PESTIGUARD</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #495057;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Ensure full viewport height */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #007BFF;
+            margin: 0;
+        }
+        .data-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+            width: 80%;
+            max-width: 400px; /* Adjust the maximum width for mobile devices */
+            margin-top: 20px;
+        }
+
+        .data-item {
+            border: 2px solid #007BFF;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-in-out;
+            width: 81%;
+        }
+
+        h2 {
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+
+        .value {
+            font-size: 1.5em;
+            color: #007BFF;
+            margin: 0;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>PESTIGUARD Dashboard</h1>
+    </header>
+    <div class="data-container">
+        <div class="data-item">
+            <h2>Level</h2>
+            <p class="value" id="level">Loading...</p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script type="module">
+        // Initialize Firebase with the provided configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrMDtoaVoNbsPKkZXgsmEXIjsaZy9BJ08",
+            authDomain: "pesticard.firebaseapp.com",
+            databaseURL: "https://pesticard-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "pesticard",
+            storageBucket: "pesticard.appspot.com",
+            messagingSenderId: "887129726940",
+            appId: "1:887129726940:web:ede8c883aa0d6eb5a4f919",
+            measurementId: "G-JWD59QD05X"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = app.database();
+        const dataRef = database.ref('message');
+
+        // Update the UI when the data changes
+        dataRef.on('value', function (snapshot) {
+            const level = snapshot.val();
+            document.getElementById('level').innerHTML = level || 'No data available';
+        });
+    </script>
+</body>
+
+</html>
